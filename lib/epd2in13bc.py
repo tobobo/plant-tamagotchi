@@ -46,13 +46,13 @@ class EPD:
         self.height = EPD_HEIGHT
 
     # Hardware reset
-    def reset(self):
+    async def reset(self):
         self.epdconfig.digital_write(self.reset_pin, 1)
-        self.epdconfig.delay_ms(200)
+        await self.epdconfig.delay_ms(200)
         self.epdconfig.digital_write(self.reset_pin, 0)
-        self.epdconfig.delay_ms(5)
+        await self.epdconfig.delay_ms(5)
         self.epdconfig.digital_write(self.reset_pin, 1)
-        self.epdconfig.delay_ms(200)
+        await self.epdconfig.delay_ms(200)
 
     def send_command(self, command):
         self.epdconfig.digital_write(self.dc_pin, 0)
@@ -66,17 +66,17 @@ class EPD:
         self.epdconfig.spi_writebyte([data])
         self.epdconfig.digital_write(self.cs_pin, 1)
 
-    def ReadBusy(self):
+    async def read_busy(self):
         logging.debug("e-Paper busy")
         while(self.epdconfig.digital_read(self.busy_pin) == 0):      # 0: idle, 1: busy
-            self.epdconfig.delay_ms(100)
+            await self.epdconfig.delay_ms(100)
         logging.debug("e-Paper busy release")
 
-    def init(self):
+    async def init(self):
         if (self.epdconfig.module_init() != 0):
             return -1
 
-        self.reset()
+        await self.reset()
 
         self.send_command(0x06)  # BOOSTER_SOFT_START
         self.send_data(0x17)
@@ -84,7 +84,7 @@ class EPD:
         self.send_data(0x17)
 
         self.send_command(0x04)  # POWER_ON
-        self.ReadBusy()
+        await self.read_busy()
 
         self.send_command(0x00)  # PANEL_SETTING
         self.send_data(0x8F)
@@ -124,7 +124,7 @@ class EPD:
                             ] &= ~(0x80 >> (y % 8))
         return buf
 
-    def display(self, imageblack, imagered):
+    async def display(self, imageblack, imagered):
         self.send_command(0x10)
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imageblack[i])
@@ -136,9 +136,9 @@ class EPD:
         # self.send_command(0x92)
 
         self.send_command(0x12)  # REFRESH
-        self.ReadBusy()
+        await self.read_busy()
 
-    def Clear(self):
+    async def clear(self):
         self.send_command(0x10)
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(0xFF)
@@ -150,14 +150,14 @@ class EPD:
         self.send_command(0x92)
 
         self.send_command(0x12)  # REFRESH
-        self.ReadBusy()
+        await self.read_busy()
 
-    def sleep(self):
+    async def sleep(self):
         self.send_command(0x02)  # POWER_OFF
-        self.ReadBusy()
+        await self.read_busy()
         self.send_command(0x07)  # DEEP_SLEEP
         self.send_data(0xA5)  # check code
 
-    def Dev_exit(self):
+    def dev_exit(self):
         self.epdconfig.module_exit()
 ### END OF FILE ###

@@ -30,8 +30,8 @@
 import os
 import logging
 import sys
-import time
 import spidev
+import asyncio
 import RPi.GPIO
 
 
@@ -54,8 +54,8 @@ class EpdConfig:
     def digital_read(self, pin):
         return self.GPIO.input(pin)
 
-    def delay_ms(self, delaytime):
-        time.sleep(delaytime / 1000.0)
+    async def delay_ms(self, delaytime):
+        await asyncio.sleep(delaytime / 1000.0)
 
     def spi_writebyte(self, data):
         self.SPI.writebytes(data)
