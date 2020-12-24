@@ -57,8 +57,11 @@ class Display():
         return last_update
 
     def get_cooldown(self, backoff):
+        if len(self.recent_intervals) < INTERVAL_HISTORY_LENGTH:
+            return backoff
+
         mean_update_interval = self.get_mean_update_interval()
-        if len(self.recent_intervals) < INTERVAL_HISTORY_LENGTH or mean_update_interval >= MIN_MEAN_INTERVAL:
+        if mean_update_interval >= MIN_MEAN_INTERVAL:
             return backoff
         else:
             return (INTERVAL_HISTORY_LENGTH + 1) * MIN_MEAN_INTERVAL - INTERVAL_HISTORY_LENGTH * mean_update_interval
