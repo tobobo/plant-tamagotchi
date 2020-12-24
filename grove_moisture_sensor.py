@@ -40,6 +40,7 @@ from grove.adc import ADC
 
 __all__ = ["GroveMoistureSensor"]
 
+
 class GroveMoistureSensor:
     '''
     Grove Moisture Sensor class
@@ -47,6 +48,7 @@ class GroveMoistureSensor:
     Args:
         pin(int): number of analog pin/channel the sensor connected.
     '''
+
     def __init__(self, channel):
         self.channel = channel
         self.adc = ADC()
@@ -61,6 +63,7 @@ class GroveMoistureSensor:
         '''
         value = self.adc.read_voltage(self.channel)
         return value
+
 
 Grove = GroveMoistureSensor
 
@@ -83,6 +86,7 @@ def main():
             result = 'Wet'
         print('Moisture value: {0}, {1}'.format(m, result))
         time.sleep(1)
+
 
 if __name__ == '__main__':
     main()
