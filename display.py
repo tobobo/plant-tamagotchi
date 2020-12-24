@@ -24,7 +24,7 @@ class Display():
         self.debounce_task = None
         self.recent_intervals = []
 
-    async def update(self, state):
+    def update(self, state):
         self.state = state
 
         if self.debounce_task == None or self.debounce_task.done():

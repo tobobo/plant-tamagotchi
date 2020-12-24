@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import time
+from datetime import datetime
 import os
 import sys
 import math
@@ -33,8 +34,9 @@ MOISTURE_THRESHOLDS = {
 
 
 class Sensor():
-    def __init__(self, display):
+    def __init__(self, display, db):
         self.display = display
+        self.db = db
         self.interval = INTERVAL
         self.moisture_sensor = GroveMoistureSensor(0)
         self.moisture = None
@@ -45,8 +47,9 @@ class Sensor():
         moisture, state = self.read_moisture()
         logging.info("sensor: time: {0}, moisture level: {1}, previous state: {2}, current state: {3}".format(
             now, moisture, self.state, state))
+        self.db.write_moisture(datetime.now().isoformat(), moisture, state)
         if self.state != state:
-            asyncio.create_task(self.display.update(state))
+            self.display.update(state)
         self.state = state
         self.moisture = moisture
 
