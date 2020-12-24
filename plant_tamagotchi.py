@@ -4,8 +4,9 @@ import asyncio
 import logging
 from sensor import Sensor
 from display import Display
-    
+
 logging.basicConfig(level=logging.INFO)
+
 
 async def main():
     sensor = Sensor()

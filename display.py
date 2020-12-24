@@ -22,8 +22,8 @@ class Display():
 
     async def update(self):
         now = time.time()
-        logging.info("time: {0}, last update: {1}, last intervals: {2}, draw delay: {3}".format(
-            now, self.last_update, self.recent_intervals, self.interval))
+        logging.info("display: time: {0}, last state: {1}, current state: {2}, last update: {3}, last intervals: {4}, draw delay: {5}".format(
+            now, self.state, self.sensor.state, self.last_update, self.recent_intervals, self.interval))
         if self.sensor.state != self.state:
             if self.last_update != None:
                 self.recent_intervals.append(now - self.last_update)
@@ -52,7 +52,8 @@ class Display():
             await epd.init()
 
             logging.info("Drawing status {0}".format(self.state))
-            blackimage1 = Image.new('1', (epd.height, epd.width), 255)  # 298*126
+            blackimage1 = Image.new(
+                '1', (epd.height, epd.width), 255)  # 298*126
             redimage1 = Image.new('1', (epd.height, epd.width), 255)  # 298*126
             plant = Image.open(os.path.join(picdir, self.state + '.png'))
             rotated = plant.transpose(Image.ROTATE_90)
