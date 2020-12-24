@@ -42,9 +42,8 @@ class Display():
             cooldown = self.get_cooldown(backoff)
             logging.info("display update: time: {0}, last state: {1}, current state: {2}, last update: {3}, cooldown: {4}".format(
                 now, self.comitted_state, self.state, last_update, cooldown))
-            await self.draw()
             self.comitted_state = self.state
-            await asyncio.sleep(cooldown)
+            await asyncio.gather(self.draw(), asyncio.sleep(cooldown))
             logging.debug("Cooldown complete")
             await self.debounce_commit(backoff * BACKOFF_MULTIPLIER)
 
