@@ -33,7 +33,8 @@ MOISTURE_THRESHOLDS = {
 
 
 class Sensor():
-    def __init__(self):
+    def __init__(self, display):
+        self.display = display
         self.interval = INTERVAL
         self.moisture_sensor = GroveMoistureSensor(0)
         self.moisture = None
@@ -44,11 +45,12 @@ class Sensor():
         moisture, state = self.read_moisture()
         logging.info("sensor: time: {0}, moisture level: {1}, previous state: {2}, current state: {3}".format(
             now, moisture, self.state, state))
+        if self.state != state:
+            asyncio.create_task(self.display.update(state))
         self.state = state
         self.moisture = moisture
 
     async def update_loop(self):
-        await asyncio.sleep(self.interval)
         while 1:
             self.update()
             await asyncio.sleep(self.interval)

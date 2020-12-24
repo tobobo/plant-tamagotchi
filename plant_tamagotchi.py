@@ -9,10 +9,9 @@ logging.basicConfig(level=logging.INFO)
 
 
 async def main():
-    sensor = Sensor()
-    display = Display(sensor)
+    display = Display()
+    sensor = Sensor(display)
 
-    sensor.update()
-    await asyncio.gather(sensor.update_loop(), display.update_loop())
+    await sensor.update_loop()
 
 asyncio.run(main())
