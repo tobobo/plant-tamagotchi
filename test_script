@@ -1,0 +1,334 @@
+Script started on Tue Dec 15 22:17:42 2020
+hello
+as[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchidf[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hhhello[?1l>[?2004l
+]2;hello]1;hellozsh: command not found: hello
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;31m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004haasdf[?1l>[?2004l
+]2;asdf]1;asdfversion: v0.8.0
+
+MANAGE PLUGINS
+asdf plugin add <name> [<git-url>]      Add a plugin from the plugin repo OR,
+                                        add a Git repo as a plugin by
+                                        specifying the name and repo url
+asdf plugin list [--urls] [--refs]      List installed plugins. Optionally show
+                                        git urls and git-ref
+asdf plugin list all                    List plugins registered on asdf-plugins
+                                        repository with URLs
+asdf plugin remove <name>               Remove plugin and package versions
+asdf plugin update <name> [<git-ref>]   Update a plugin to latest commit or a
+                                        particular git-ref
+asdf plugin update --all                Update all plugins
+
+
+MANAGE PACKAGES
+asdf install                            Install all the package versions listed
+                                        in the .tool-versions file
+asdf install <name>                     Install one tool at the version
+                                        specified in the .tool-versions file
+asdf install <name> <version>           Install a specific version of a package
+asdf install <name> latest[:<version>]  Install the latest stable version of a
+                                        package, or with optional version,
+                                        install the latest stable version that
+                                        begins with the given string
+asdf uninstall <name> <version>         Remove a specific version of a package
+asdf current                            Display current version set or being
+                                        used for all packages
+asdf current <name>                     Display current version set or being
+                                        used for package
+asdf where <name> [<version>]           Display install path for an installed
+                                        or current version
+asdf which <command>                    Display the path to an executable
+asdf local <name> <version>             Set the package local version
+asdf global <name> <version>            Set the package global version
+asdf shell <name> <version>             Set the package version to
+                                        `ASDF_${LANG}_VERSION` in the current shell
+asdf latest <name> [<version>]          Show latest stable version of a package
+asdf list <name>                        List installed versions of a package
+asdf list all <name> [<version>]        List all versions of a package and
+                                        optionally filter the returned versions
+asdf help <name> [<version>]            Output documentation for plugin and tool
+
+
+UTILS
+asdf exec <command> [args...]           Executes the command shim for current version
+asdf env <command> [util]               Runs util (default: `env`) inside the
+                                        environment used for command shim execution.
+asdf info                               Print OS, Shell and ASDF debug information.
+asdf reshim <name> <version>            Recreate shims for version of a package
+asdf shim-versions <command>            List the plugins and versions that
+                                        provide a command
+asdf update                             Update asdf to the latest stable release
+asdf update --head                      Update asdf to the latest on the master branch
+
+"Late but latest"
+-- Rajinikanth
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hlless [?2004l
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;31m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hlls[?1l>[?2004l
+]2;ls -GF]1;ls[1m[36mepd[39;49m[0m/                      grove_moisture_sensor.py  plant_tamagotchi.py       test_script
+epd_2in13bc_test.py       [1m[36mpic[39;49m[0m/                      [31mstart_on_boot[39;49m[0m*
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hlless grove_moisture_sensor.py[1m [0m[0m [?1l>[?2004l
+]2;less -r grove_moisture_sensor.py]1;less[?1049h[?1h=#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# The MIT License (MIT)
+#
+# Grove Base Hat for the Raspberry Pi, used to connect grove sensors.
+# Copyright (C) 2018  Seeed Technology Co.,Ltd.
+'''
+This is the code for
+    - Grove - Moisture Sensor <https://www.seeedstudio.com/Grove-Moisture-Sensor-p-955.html>`_
+
+Examples:
+
+    .. code-block:: python
+
+[7mgrove_moisture_sensor.py[27m[K[K[?1l>[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004heexit[?1l>[?2004l
+]2;exit]1;exit
+Script done on Tue Dec 15 22:18:03 2020
+Script started on Tue Dec 15 22:18:33 2020
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hlls[?1l>[?2004l
+]2;ls -GF]1;ls[1m[36mepd[39;49m[0m/                      grove_moisture_sensor.py  plant_tamagotchi.py       test_script
+epd_2in13bc_test.py       [1m[36mpic[39;49m[0m/                      [31mstart_on_boot[39;49m[0m*
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hlless grove_moisture_sensor.py[1m [0m[0m [?1l>[?2004l
+]2;less -r grove_moisture_sensor.py]1;less[?1049h[?1h=#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# The MIT License (MIT)
+#
+# Grove Base Hat for the Raspberry Pi, used to connect grove sensors.
+# Copyright (C) 2018  Seeed Technology Co.,Ltd.
+'''
+This is the code for
+    - Grove - Moisture Sensor <https://www.seeedstudio.com/Grove-Moisture-Sensor-p-955.html>`_
+
+Examples:
+
+    .. code-block:: python
+
+[7mgrove_moisture_sensor.py[27m[K[K[?1l>[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004hsses  eexit[?1l>[?2004l
+]2;exit]1;exit
+Script done on Tue Dec 15 22:19:11 2020
+Script started on Tue Dec 15 22:20:14 2020
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     ]2;tbutler@tobiasbutler-macbook-pro: ~/Documents/pi/plant-tamagotchi]1;..nt-tamagotchi[0m[27m[24m[J[01;32m➜  [36mplant-tamagotchi[00m [K[?1h=[?2004heexit[?1l>[?2004l
+]2;exit]1;exit
+Script done on Tue Dec 15 22:20:26 2020
+Script started on Tue Dec 15 22:20:50 2020
+script: bash: No such file or directory
+
+Script done on Tue Dec 15 22:20:50 2020
+Script started on Tue Dec 15 22:20:57 2020
+script: /usr/bin/bash: No such file or directory
+
+Script done on Tue Dec 15 22:20:57 2020
+Script started on Tue Dec 15 22:21:09 2020
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034hbash-3.2$ ls
+epd				grove_moisture_sensor.py	plant_tamagotchi.py		test_script
+epd_2in13bc_test.py		pic				start_on_boot
+bash-3.2$ cat epd
+cat: epd: Is a directory
+bash-3.2$ ls epd
+epd2in13bc.py	epdconfig.py
+bash-3.2$ exit
+exit
+
+Script done on Tue Dec 15 22:22:08 2020
+Script started on Tue Dec 15 22:22:15 2020
+command: -E always
+script: -E: No such file or directory
+
+Script done on Tue Dec 15 22:22:15 2020
+Script started on Tue Dec 15 22:23:13 2020
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034hbash-3.2$ ls
+epd				grove_moisture_sensor.py	plant_tamagotchi.py		test_script
+epd_2in13bc_test.py		pic				start_on_boot
+bash-3.2$ less grove_moisture_sensor.py 
+[?1049h[?1h=#!/usr/bin/env python[m
+# -*- coding: utf-8 -*-[m
+#[m
+# The MIT License (MIT)[m
+#[m
+# Grove Base Hat for the Raspberry Pi, used to connect grove sensors.[m
+# Copyright (C) 2018  Seeed Technology Co.,Ltd.[m
+'''[m
+This is the code for[m
+    - Grove - Moisture Sensor <https://www.seeedstudio.com/Grove-Moisture-Sensor-p-955.html>`_[m
+[m
+Examples:[m
+[m
+    .. code-block:: python[m
+[m
+[7mgrove_moisture_sensor.py[27m[K[K:[K[K...skipping...
+#!/usr/bin/env python[m
+# -*- coding: utf-8 -*-[m
+#[m
+# The MIT License (MIT)[m
+#[m
+# Grove Base Hat for the Raspberry Pi, used to connect grove sensors.[m
+# Copyright (C) 2018  Seeed Technology Co.,Ltd.[m
+'''[m
+This is the code for[m
+    - Grove - Moisture Sensor <https://www.seeedstudio.com/Grove-Moisture-Sensor-p-955.html>`_[m
+[m
+Examples:[m
+[m
+    .. code-block:: python[m
+[m
+:[K[K:[K11[K[K:[K[K:[K[K:[K[K:[K[K[?1l>[?1049lbash-3.2$ 
+bash-3.2$ exit
+exit
+
+Script done on Tue Dec 15 22:23:33 2020
+Script started on Tue Dec 15 22:25:05 2020
+script: /usr/bin/bash: No such file or directory
+
+Script done on Tue Dec 15 22:25:05 2020
+Script started on Tue Dec 15 22:25:13 2020
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034hbash-3.2$ ls
+epd
+epd_2in13bc_test.py
+grove_moisture_sensor.py
+pic
+plant_tamagotchi.py
+start_on_boot
+test_script
+bash-3.2$ ls
+epd
+epd_2in13bc_test.py
+grove_moisture_sensor.py
+pic
+plant_tamagotchi.py
+start_on_boot
+test_script
+bash-3.2$ less plant_tamaggotchi.py 
+[?1049h[?1h=#!/usr/bin/python[m
+# -*- coding:utf-8 -*-[m
+import sys[m
+import os[m
+picdir = os.path.join(os.[m [7mplant_tamagotchi.py[27m[K[Kpath.dirname(os.path.real[m path(__file__)), 'pic')[m
+libdir = os.path.join(os.[m path.dirname(os.path.real[m path(__file__)), 'epd')[m
+:[K[Kif os.path.exists(libdir)[m :[m
+    sys.path.append(libdi[m r)[m
+[m
+:[K[Kimport logging[m
+from epd import epd2in13b[m c[m
+from grove_moisture_senso[m r import GroveMoistureSen[m :[K[Ksor[m
+import time[m
+from PIL import Image,Ima[m geDraw,ImageFont[m
+import traceback[m
+:[K[K[m
+logging.basicConfig(level[m =logging.DEBUG)[m
+[m
+def draw(epd, status):[m
+:[K[K    try:[m
+        # logging.info("e[m pd2in13bc Demo")[m
+        [m
+        # epd = epd2in13b[m :[K[Kc.EPD()[m
+        # logging.info("i[m nit and Clear")[m
+        epd.init()[m
+        # epd.Clear()[m
+:[K[K        # time.sleep(1)[m
+        [m
+        # # Drawing on th[m e image[m
+        # logging.info("D[m :[K[Krawing")    [m
+        # font20 = ImageF[m ont.truetype(os.path.join[m (picdir, 'Font.ttc'), 20)[m
+        # font18 = ImageF[m :[K[Kont.truetype(os.path.join[m (picdir, 'Font.ttc'), 18)[m
+        [m
+        # # Drawing on th[m e Horizontal image[m
+:[K[K        # logging.info("1[m .Drawing on the Horizonta[m l image...") [m
+        # HBlackimage = I[m mage.new('1', (epd.height[m :[K[K, epd.width), 255)  # 298[m *126[m
+        # HRYimage = Imag[m e.new('1', (epd.height, e[m pd.width), 255)  # 298*12[m :[K[K6  ryimage: red or yellow[m  image  [m
+        # drawblack = Ima[m geDraw.Draw(HBlackimage)[m
+        # drawry = ImageD[m :[K[Kraw.Draw(HRYimage)[m
+        # drawblack.text([m (10, 0), 'hello world', f[m ont = font20, fill = 0)[m
+        # drawblack.text([m :[K[K(10, 20), '2.13inch e-Pap[m er bc', font = font20, fi[m ll = 0)[m
+        # drawblack.text([m (120, 0), u'微雪电子', fo[m :[K[Knt = font20, fill = 0)   [m  [m
+        # drawblack.line([m (20, 50, 70, 100), fill =[m  0)[m
+:[K[K        # drawblack.line([m (70, 50, 20, 100), fill =[m  0)[m
+        # drawblack.recta[m ngle((20, 50, 70, 100), o[m :[K[Kutline = 0)    [m
+        # drawry.line((16[m 5, 50, 165, 100), fill = [m 0)[m
+        # drawry.line((14[m :[K[K0, 75, 190, 75), fill = 0[m )[m
+        # drawry.arc((140[m , 50, 190, 100), 0, 360, [m fill = 0)[m
+:[K[K        # drawry.rectangl[m e((80, 50, 130, 100), fil[m l = 0)[m
+        # drawry.chord((8[m 5, 55, 125, 95), 0, 360, [m :[K[Kfill =1)[m
+        # epd.display(epd[m .getbuffer(HBlackimage), [m epd.getbuffer(HRYimage))[m
+        # time.sleep(2)[m
+:[K[K        [m
+        # # Drawing on th[m e Vertical image[m
+        # logging.info("2[m .Drawing on the Vertical [m :[K[Kimage...")[m
+        # LBlackimage = I[m mage.new('1', (epd.width,[m  epd.height), 255)  # 126[m *298[m
+:[K[K        # LRYimage = Imag[m e.new('1', (epd.width, ep[m d.height), 255)  # 126*29[m 8[m
+        # drawblack = Ima[m :[K[KgeDraw.Draw(LBlackimage)[m
+        # drawry = ImageD[m raw.Draw(LRYimage)[m
+        [m
+        # drawblack.text([m :[K[K(2, 0), 'hello world', fo[m nt = font18, fill = 0)[m
+        # drawblack.text([m (2, 20), '2.13 epd b', fo[m nt = font18, fill = 0)[m
+:[K[K        # drawblack.text([m (20, 50), u'微雪电子', fo[m nt = font18, fill = 0)[m
+        # drawblack.line([m (10, 90, 60, 140), fill =[m :[K[K 0)[m
+        # drawblack.line([m (60, 90, 10, 140), fill =[m  0)[m
+        # drawblack.recta[m :[K[Kngle((10, 90, 60, 140), o[m utline = 0)[m
+        # drawry.rectangl[m e((10, 150, 60, 200), fil[m l = 0)[m
+:[K[K        # drawry.arc((15,[m  95, 55, 135), 0, 360, fi[m ll = 0)[m
+        # drawry.chord((1[m 5, 155, 55, 195), 0, 360,[m :[K[K fill =1)[m
+        # epd.display(epd[m .getbuffer(LBlackimage), [m epd.getbuffer(LRYimage))[m
+        # time.sleep(2)[m
+:[K[K        [m
+        # logging.info("3[m .read bmp file")[m
+        # HBlackimage = I[m mage.open(os.path.join(pi[m :[K[Kcdir, '2in13bc-b.bmp'))[m
+        # HRYimage = Imag[m e.open(os.path.join(picdi[m r, '2in13bc-ry.bmp'))[m
+        # epd.display(epd[m :[K[K.getbuffer(HBlackimage), [m epd.getbuffer(HRYimage))[m
+        # time.sleep(2)[m
+        [m
+        logging.info("4.r[m :[K[Kead bmp file on window")[m
+        blackimage1 = Ima[m ge.new('1', (epd.height, [m epd.width), 255)  # 298*1[m 26[m
+:[K[K        redimage1 = Image[m .new('1', (epd.height, ep[m d.width), 255)  # 298*126[m     [m
+        plant = Image.ope[m :[K[Kn(os.path.join(picdir, st[m atus + '.png'))[m
+        rotated = plant.t[m ranspose(Image.ROTATE_90)[m
+        width, height = r[m :[K[K[?1l>[?1049lbash-3.2$ resize -s 20 20 [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K0
+[8;20;20t[18t[14tCOLUMNS=25;
+LINES=6;
+export COLUMNS LINES;
+bash-3.2$  [Kless -a
+Missing filename ("less --help" for help)
+bash-3.2$ less py[K[K
+epd/
+epd_2in13bc_test.py
+grove_moisture_sensor.py
+pic/
+plant_tamagotchi.py
+--More--[Kstart_on_boot
+test_script
+bash-3.2$ less plant_tamaggotchi.py 
+[?1049h[?1h=#!/usr/bin/python[m
+# -*- coding:utf-8 -*-[m
+import sys[m
+import os[m
+picdir = os.path.join(os.[m [7mplant_tamagotchi.py[27m[K[Kpath.dirname(os.path.real[m path(__file__)), 'pic')[m
+libdir = os.path.join(os.[m path.dirname(os.path.real[m path(__file__)), 'epd')[m
+:[K[Kif os.path.exists(libdir)[m :[m
+    sys.path.append(libdi[m r)[m
+[m
+:[K[Kimport logging[m
+from epd import epd2in13b[m c[m
+from grove_moisture_senso[m r import GroveMoistureSen[m :[K[Ksor[m
+import time[m
+from PIL import Image,Ima[m geDraw,ImageFont[m
+import traceback[m
+:[K[K[m
+logging.basicConfig(level[m =logging.DEBUG)[m
+[m
+def draw(epd, status):[m
+:[K[K    try:[m
+        # logging.info("e[m pd2in13bc Demo")[m
+        [m
+        # epd = epd2in13b[m :[K[K[?1l>[?1049lbash-3.2$ 
