@@ -6,7 +6,7 @@ import traceback
 from PIL import Image, ImageDraw, ImageFont
 from lib.epd2in13bc import EPD
 
-picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
+image_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'images')
 
 SHORT_INTERVAL = 15
 LONG_INTERVAL = 180
@@ -55,7 +55,7 @@ class Display():
             blackimage1 = Image.new(
                 '1', (epd.height, epd.width), 255)  # 298*126
             redimage1 = Image.new('1', (epd.height, epd.width), 255)  # 298*126
-            plant = Image.open(os.path.join(picdir, self.state + '.png'))
+            plant = Image.open(os.path.join(image_dir, self.state + '.png'))
             rotated = plant.transpose(Image.ROTATE_90)
             width, height = rotated.size
             enlarged = rotated.resize((width * 4, height * 4))
