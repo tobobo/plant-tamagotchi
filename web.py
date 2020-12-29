@@ -37,9 +37,9 @@ def format_end(start, resolution):
 
 
 async def moisture(request):
-    resolution = request.query['resolution'] if 'resolution' in request.query else 'day'
+    resolution = request.query['resolution'] if 'resolution' in request.query else 'hour'
     start = format_start(request.query['start'] if 'start' in request.query else datetime.now(
-    ) - timedelta(weeks=2), resolution)
+    ) - timedelta(days=2), resolution)
     end = format_end(
         request.query['end'] if 'end' in request.query else datetime.now(), resolution)
     return web.json_response({
