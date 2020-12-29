@@ -15,7 +15,6 @@ async function getChartData(start, end, resolution) {
   const endDate = new Date(responseData.end);
   
   while (dateCursor < endDate) {
-    console.log('date cursor', dateCursor)
     const [dataLabel, dataValue] = responseData.data[dataIndex] || [];
     labels.push(dateCursor.toISOString());
     if (dataLabel && new Date(dataLabel) <= dateCursor) {
@@ -32,7 +31,7 @@ async function getChartData(start, end, resolution) {
     labels,
     datasets: [
       {
-        label: 'data',
+        label: 'moisture',
         spanGaps: false,
         data,
       }

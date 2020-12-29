@@ -13,18 +13,11 @@ async def database(request):
 
 
 def floor_date(date, resolution):
-    print("replacing micro and second in ", date)
     date = date.replace(microsecond=0, second=0)
-    print("replaced", date)
     if resolution == "hour":
-        print("replacing minute in ", date)
         date = date.replace(minute=0)
-        print("replaced", date)
     elif resolution == "day":
-        print("replacing hour in ", date)
         date = date.replace(minute=0, hour=0)
-        print("replaced", date)
-    print("returning", date)
     return date
 
 
