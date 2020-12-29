@@ -12,22 +12,22 @@ INTERVAL = 5
 MOISTURE_THRESHOLDS = {
     None: [
         ('dry', 1900),
-        ('moist', 1500),
+        ('moist', 1650),
         ('wet', -math.inf),
     ],
     'dry': [
         ('dry', 1850),
-        ('moist', 1500),
+        ('moist', 1650),
         ('wet', -math.inf)
     ],
     'moist': [
         ('dry', 1950),
-        ('moist', 1450),
+        ('moist', 1600),
         ('wet', -math.inf),
     ],
     'wet': [
         ('dry', 1900),
-        ('moist', 1550),
+        ('moist', 1700),
         ('wet', -math.inf),
     ]
 }
