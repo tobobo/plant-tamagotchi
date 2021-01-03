@@ -21,12 +21,12 @@ def floor_date(date, resolution):
     return date
 
 
-def format_start(end, resolution):
-    return floor_date(end, resolution).isoformat()
+def format_start(start, resolution):
+    return floor_date(datetime.fromisoformat(str(start).replace('Z', '')), resolution).isoformat()
 
 
-def format_end(start, resolution):
-    date = start
+def format_end(end, resolution):
+    date = datetime.fromisoformat(str(end).replace('Z', ''))
     if resolution == "minute":
         date += timedelta(minutes=1)
     elif resolution == "hour":
@@ -37,7 +37,7 @@ def format_end(start, resolution):
 
 
 async def moisture(request):
-    resolution = request.query['resolution'] if 'resolution' in request.query else 'hour'
+    resolution = request.query['resolution'] if 'resolution' in request.query else 'day'
     start = format_start(request.query['start'] if 'start' in request.query else datetime.now(
     ) - timedelta(days=7), resolution)
     end = format_end(
