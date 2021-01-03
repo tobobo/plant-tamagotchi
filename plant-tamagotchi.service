@@ -1,0 +1,14 @@
+[Unit]
+Description=Plant Tamagotchi sensor, display, server
+After=network.target
+
+[Service]
+ExecStart=sudo /usr/bin/python3 -u plant_tamagotchi.py
+WorkingDirectory=/home/pi/plant-tamagotchi
+StandardOutput=append:/var/log/plant-tamagotchi.log
+StandardError=append:/var/log/plant-tamagotchi.log
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

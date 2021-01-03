@@ -2,4 +2,4 @@
 output.log
 .DS_Store
 database.db
-sync
+.env

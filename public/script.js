@@ -67,7 +67,7 @@ async function start() {
               labelString: 'dryness',
             },
             ticks: {
-              min: 0,
+              min: 1400,
               max: 2000,
             },
           },

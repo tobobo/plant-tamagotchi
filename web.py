@@ -39,7 +39,7 @@ def format_end(start, resolution):
 async def moisture(request):
     resolution = request.query['resolution'] if 'resolution' in request.query else 'hour'
     start = format_start(request.query['start'] if 'start' in request.query else datetime.now(
-    ) - timedelta(days=2), resolution)
+    ) - timedelta(days=7), resolution)
     end = format_end(
         request.query['end'] if 'end' in request.query else datetime.now(), resolution)
     return web.json_response({
@@ -50,7 +50,7 @@ async def moisture(request):
     })
 
 
-async def start_server(db):
+async def start_server(db, port=8080):
     app = web.Application()
     app.add_routes([
         web.get('/', index),
@@ -59,8 +59,9 @@ async def start_server(db):
     app['db'] = db
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(runner, '0.0.0.0', 8080)
+    site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
+    logging.info("web server started on port {0}".format(port))
     while 1:
         await asyncio.sleep(1)
 
