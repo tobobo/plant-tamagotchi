@@ -10,8 +10,7 @@ export default async function getChartData(start, end, resolution) {
     ...(end && { end }),
     ...(resolution && { resolution }),
   });
-  debugger;
-  const responseData = await (await fetch(`./moisture?${query}`)).json();
+  const responseData = await (await fetch(`./history?${query}`)).json();
   
   const labels = [];
   const data = [];

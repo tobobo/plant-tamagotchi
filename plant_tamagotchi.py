@@ -17,7 +17,7 @@ async def main():
     display = Display()
     sensor = Sensor(display, db)
 
-    asyncio.create_task(start_server(port=80, db=db))
+    asyncio.create_task(start_server(port=80, db=db, sensor=sensor))
 
     await sensor.update_loop()
 

@@ -36,7 +36,7 @@ def format_end(end, resolution):
     return floor_date(date, resolution).isoformat()
 
 
-async def moisture(request):
+async def history(request):
     resolution = request.query['resolution'] if 'resolution' in request.query else 'day'
     start = format_start(request.query['start'] if 'start' in request.query else datetime.now(
     ) - timedelta(days=7), resolution)
@@ -50,13 +50,22 @@ async def moisture(request):
     })
 
 
-async def start_server(db, port=8080):
+def status(request):
+    return web.json_response({
+        'moisture': request.app['sensor'].moisture,
+        'state': request.app['sensor'].state
+    })
+
+
+async def start_server(db, sensor, port=8080):
     app = web.Application()
     app.add_routes([
         web.get('/', index),
-        web.get('/moisture', moisture),
+        web.get('/history', history),
+        web.get('/status', status),
         web.static('/', 'public')])
     app['db'] = db
+    app['sensor'] = sensor
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, '0.0.0.0', port)
@@ -70,9 +79,16 @@ if __name__ == "__main__":
     from database import Database
     db = Database()
     db.setup()
+
+    class FauxSensor():
+        def __init__(self):
+            self.moisture = 1700
+            self.state = 'wet'
+
+    faux_sensor = FauxSensor()
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(start_server(db))
+        loop.run_until_complete(start_server(db, faux_sensor))
     except KeyboardInterrupt:
         pass
     loop.close()
