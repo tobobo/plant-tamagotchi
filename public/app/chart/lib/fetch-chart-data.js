@@ -37,6 +37,7 @@ export default async function getChartData(start, end, resolution) {
       labels,
       datasets: [
         {
+          backgroundColor: 'rgba(13, 212, 63, 0.7)',
           label: 'moisture',
           spanGaps: false,
           data,

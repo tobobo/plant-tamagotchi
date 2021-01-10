@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<head>
-  <link rel="stylesheet" href="./style.css" />
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-  <script defer type="module" src="./script.js"></script>
-</head>
 <html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+  </head>
   <body>
     <div id="app">
+      <h1>hanagotchi</h1>
       <div id="status">
-        <div class="img-container"></div>
-        <div class="status-msg"></div>
+        <div id="status_content"></div>
+        <template id="status_template">
+          <img class="status-img" src="./images/[state].png">
+          <span id="moisture">current moisture level: [moisture]</span>
+        </template>
       </div>
       <div id="chart-control">
-        since:
-        <input type="date" id="start" />
-        resolution:
-        <select id="resolution">
-          <option selected>day</option>
-          <option>hour</option>
-          <option>minute</option>
-        </select>
-        <button id="show_data">show data</button>
-        <span id="loading_state" hidden>loading...</span>
+        <div class="controls">
+          <div class="date-field">
+            show data since:
+            <input type="date" id="start" class="form-control" />
+          </div>
+          <div class="resolution-field">
+            resolution:
+            <select id="resolution" class="form-control">
+              <option selected>day</option>
+              <option>hour</option>
+              <option>minute</option>
+            </select>
+            <button id="show_data" class="form-control">go</button>
+          </div>
+          <span id="loading_state" hidden>loading...</span>
+        </div>
         <div id="chart">
           <div class="chart-container">
             <canvas id="chart-canvas"></canvas>
@@ -30,5 +40,6 @@
         </div>
       </div>
     </div>
+    <script defer type="module" src="./script.js"></script>
   </body>
 </html>

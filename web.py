@@ -63,6 +63,7 @@ async def start_server(db, sensor, port=8080):
         web.get('/', index),
         web.get('/history', history),
         web.get('/status', status),
+        web.static('/images', 'images'),
         web.static('/', 'public')])
     app['db'] = db
     app['sensor'] = sensor
