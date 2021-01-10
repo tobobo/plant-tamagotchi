@@ -49,7 +49,7 @@ export default class PlantChart {
             {
               scaleLabel: {
                 display: true,
-                labelString: 'dryness',
+                labelString: 'sensor reading',
               },
               ticks: {
                 min: 1400,
