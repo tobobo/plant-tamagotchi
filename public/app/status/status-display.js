@@ -11,19 +11,25 @@ export default class StatusDisplay {
     this.data = await (await fetch('/status')).json();
   }
   
-  createContentFragment() {
+  updateContent(el = this.content) {
     const { moisture, state } = this.data;
-    const content = this.template.content.cloneNode(true);
-    const img = content.querySelector('img');
-    img.setAttribute('src', img.getAttribute('src').replace('[state]', state));
-    const moistureEl = content.querySelector('#moisture');
-    moistureEl.innerHTML = moistureEl.innerHTML.replace('[moisture]', moisture);
-    return content;
+    const img = el.querySelector('img');
+    const templateImg = this.template.content.querySelector('img');
+    img.setAttribute('src', templateImg.getAttribute('src').replace('[state]', state));
+    const moistureEl = el.querySelector('#moisture');
+    const templateMoistureEl = this.template.content.querySelector('#moisture');
+    moistureEl.innerHTML = templateMoistureEl.innerHTML.replace('[moisture]', moisture);
+    return el;
   }
 
   async update() {
-    this.content.innerHTML = '';
-    this.content.appendChild(this.createContentFragment());
+    if (this.hasInitializedContent) {
+      this.updateContent();
+    } else {
+      const initialContent = this.updateContent(this.template.content.cloneNode(true));
+      this.content.appendChild(initialContent);
+      this.hasInitializedContent = true;
+    }
   }
 
   async fetchAndUpdate() {

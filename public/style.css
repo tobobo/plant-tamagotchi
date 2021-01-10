@@ -6,8 +6,18 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+h1 {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
 #status {
   margin: 20px auto;
+}
+
+#status_content {
+  display: flex;
+  align-items: center;
 }
 
 .status-img {
@@ -18,8 +28,22 @@
   height: auto;
 }
 
+.status-description {
+  padding-left: 20px;
+  flex-grow: true;
+}
+
+.status-description #moisture {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.status-description .moisture-label {
+  font-size: 0.8em;
+}
+
 .controls {
-  margin: 10px auto;
+  margin: 0 auto 20px;
 }
 
 .date-field, .resolution-field {
