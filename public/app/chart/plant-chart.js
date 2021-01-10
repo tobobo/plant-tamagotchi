@@ -13,15 +13,17 @@ export default class PlantChart {
   }
   
   needsFetch() {
-    return this.start !== this.lastFetchedData?.start ||
+    return !this.hasFetched ||
+      this.start !== this.lastFetchedData?.start ||
       this.end !== this.lastFetchedData?.end ||
-      this.resolution !== this.lastFetchedData.resolution;
+      this.resolution !== this.lastFetchedData?.resolution;
   }
   
   async ensureData() {
     if (!this.needsFetch()) {
       return;
     }
+    this.hasFetched = true;
     const { chartData, resolution } = await fetchChartData(this.start, this.end, this.resolution);
     this.chartData = chartData;
     this.resolution = resolution == 'minute' ? 'hour' : resolution;
@@ -70,7 +72,6 @@ export default class PlantChart {
   
   async update() {
     await this.ensureData();
-    debugger;
     if (!this.chart) {
       this.chart = new Chart(this.context, this.getChartConfig());
     } else {
