@@ -13,13 +13,16 @@
         <div class="status-msg"></div>
       </div>
       <div id="chart-control">
+        since:
+        <input type="date" id="start" />
+        resolution:
         <select id="resolution">
           <option selected>day</option>
           <option>hour</option>
           <option>minute</option>
         </select>
         <button id="show_data">show data</button>
-        <div id="loading_state" hidden>loading...</div>
+        <span id="loading_state" hidden>loading...</span>
         <div id="chart">
           <div class="chart-container">
             <canvas id="chart-canvas"></canvas>

@@ -1,9 +1,9 @@
 import fetchChartData from './lib/fetch-chart-data.js'
 
 export default class PlantChart {
-  constructor({ container }) {
-    this.container = container;
-    this.context = container.querySelector('#chart-canvas').getContext('2d');
+  constructor({ el }) {
+    this.el = el;
+    this.context = el.querySelector('#chart-canvas').getContext('2d');
   }
   
   setParameters({ start, end, resolution }) {
@@ -25,6 +25,11 @@ export default class PlantChart {
     }
     this.hasFetched = true;
     const { chartData, resolution } = await fetchChartData(this.start, this.end, this.resolution);
+    this.lastFetchedData = {
+      start: this.start,
+      end: this.end,
+      resolution: resolution,
+    };
     this.chartData = chartData;
     this.resolution = resolution == 'minute' ? 'hour' : resolution;
   }

@@ -1,8 +1,8 @@
 import wait from '../lib/wait.js';
 
 export default class StatusDisplay {
-  constructor({ container }) {
-    this.container = container;
+  constructor({ el }) {
+    this.el = el;
   }
 
   async fetchData() {
@@ -11,7 +11,7 @@ export default class StatusDisplay {
 
   async update() {
     const { moisture, state } = this.data;
-    this.container.innerHTML = `moisture: ${moisture}, state: ${state}`;
+    this.el.innerHTML = `moisture: ${moisture}, state: ${state}`;
   }
 
   async fetchAndUpdate() {

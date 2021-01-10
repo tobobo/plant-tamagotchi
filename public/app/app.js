@@ -3,10 +3,10 @@ import ChartControl from './chart/chart-control.js';
 import StatusDisplay from './status/status-display.js';
 
 export default class App {
-  constructor({ container }) {
-    this.container = container;
-    this.statusDisplay = new StatusDisplay({ container: this.container.querySelector('#status') });
-    this.chartControl = new ChartControl({ container: this.container.querySelector('#chart-control') });
+  constructor({ el }) {
+    this.el = el;
+    this.statusDisplay = new StatusDisplay({ el: this.el.querySelector('#status') });
+    this.chartControl = new ChartControl({ el: this.el.querySelector('#chart-control') });
     this.chartControl.setParameters(parseQueryString());
   }
   
