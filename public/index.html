@@ -12,9 +12,18 @@
         <div class="img-container"></div>
         <div class="status-msg"></div>
       </div>
-      <div id="chart">
-        <div class="chart-container">
-          <canvas id="chart-canvas"></canvas>
+      <div id="chart-control">
+        <select id="resolution">
+          <option selected>day</option>
+          <option>hour</option>
+          <option>minute</option>
+        </select>
+        <button id="show_data">show data</button>
+        <div id="loading_state" hidden>loading...</div>
+        <div id="chart">
+          <div class="chart-container">
+            <canvas id="chart-canvas"></canvas>
+          </div>
         </div>
       </div>
     </div>

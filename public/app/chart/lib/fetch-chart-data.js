@@ -30,15 +30,18 @@ export default async function getChartData(start, end, resolution) {
     }
     dateCursor.setTime(dateCursor.getTime() + chartResolutions[responseData.resolution])
   }
-
+  
   return {
-    labels,
-    datasets: [
-      {
-        label: 'moisture',
-        spanGaps: false,
-        data,
-      }
-    ]
+    resolution: responseData.resolution,
+    chartData: {
+      labels,
+      datasets: [
+        {
+          label: 'moisture',
+          spanGaps: false,
+          data,
+        }
+      ]
+    },
   }
 }

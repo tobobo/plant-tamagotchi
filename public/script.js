@@ -1,9 +1,9 @@
-import PlantChart from './plant-chart.js'
-import App from './app.js';
+import PlantChart from './app/chart/plant-chart.js'
+import App from './app/app.js';
 
 async function start() {
   const app = new App({ container: document.getElementById('app') });
-  await app.render();
+  await app.attach();
 }
 
 start();
