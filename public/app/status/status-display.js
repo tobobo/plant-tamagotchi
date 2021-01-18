@@ -8,7 +8,11 @@ export default class StatusDisplay {
   }
 
   async fetchData() {
-    this.data = await (await fetch('/status')).json();
+    try {
+      this.data = await (await fetch('/status')).json();
+    } catch(e) {
+      this.data = null;
+    }
   }
   
   updateContent(el = this.content) {
@@ -41,7 +45,9 @@ export default class StatusDisplay {
 
   async fetchAndUpdate() {
     await this.fetchData();
-    this.update();
+    if (this.data) {
+      this.update();
+    }
   }
   
   async updateLoop() {
