@@ -5,7 +5,6 @@ import asyncio
 import traceback
 import math
 from PIL import Image, ImageDraw, ImageFont
-from aiolimiter import AsyncLimiter
 from lib.epd2in13bc import EPD
 
 image_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'images')
@@ -14,6 +13,12 @@ MIN_COOLDOWN = 15
 MIN_MEAN_INTERVAL = 180
 INTERVAL_HISTORY_LENGTH = 5
 BACKOFF_MULTIPLIER = 2
+
+DEFAULT_SCALE = 4
+
+STATE_SCALE = {
+    'brushing_teeth': 3
+}
 
 
 class Display():
@@ -24,7 +29,7 @@ class Display():
         self.debounce_task = None
         self.recent_intervals = []
 
-    def update(self, state):
+    def update(self, state, moisture):
         self.state = state
 
         if self.debounce_task == None or self.debounce_task.done():
@@ -71,6 +76,12 @@ class Display():
         else:
             return sum(self.recent_intervals) / len(self.recent_intervals)
 
+    def get_scale(self, state):
+        if state in STATE_SCALE:
+            return STATE_SCALE[state]
+        else:
+            return DEFAULT_SCALE
+
     async def draw(self):
         try:
             epd = EPD()
@@ -84,7 +95,8 @@ class Display():
                 image_dir, self.state + '.png'))
             rotated = plant.transpose(Image.ROTATE_90)
             width, height = rotated.size
-            enlarged = rotated.resize((width * 4, height * 4))
+            scale = self.get_scale(self.state)
+            enlarged = rotated.resize((width * scale, height * scale))
             new_width, new_height = enlarged.size
             blackimage1.paste(enlarged, (round(
                 (epd.height - new_width) / 2), round((epd.width - new_height) / 2)))

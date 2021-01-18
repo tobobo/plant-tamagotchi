@@ -53,7 +53,8 @@ async def history(request):
 def status(request):
     return web.json_response({
         'moisture': request.app['sensor'].moisture,
-        'state': request.app['sensor'].state
+        'state': request.app['sensor'].state,
+        'base_state': request.app['sensor'].base_state,
     })
 
 
@@ -84,7 +85,8 @@ if __name__ == "__main__":
     class FauxSensor():
         def __init__(self):
             self.moisture = 1700
-            self.state = 'wet'
+            self.state = 'cap'
+            self.base_state = 'wet'
 
     faux_sensor = FauxSensor()
     loop = asyncio.get_event_loop()

@@ -38,6 +38,7 @@ export default class PlantChart {
     return {
       type: 'line',
       options: {
+        maintainAspectRatio: false,
         adapters: {
           time: window.moment,
         },
@@ -49,10 +50,10 @@ export default class PlantChart {
             {
               scaleLabel: {
                 display: true,
-                labelString: 'sensor reading',
+                labelString: 'moisture level',
               },
               ticks: {
-                min: 1400,
+                min: 1000,
                 max: 2000,
               },
             },

@@ -15,7 +15,7 @@
           <img class="status-img" src="./images/[state].png">
           <div class="status-description">
             <div id="moisture">[moisture]</div>
-            <div class="moisture-label">current moisture level</div>
+            <div id="moisture-level" class="moisture-label">current moisture level ([base_state])</div>
           </div>
         </template>
       </div>
@@ -33,8 +33,8 @@
               <option>minute</option>
             </select>
             <button id="show_data" class="form-control">go</button>
+            <span id="loading_state" hidden>loading...</span>
           </div>
-          <span id="loading_state" hidden>loading...</span>
         </div>
         <div id="chart">
           <div class="chart-container">

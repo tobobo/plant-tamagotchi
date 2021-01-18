@@ -12,13 +12,20 @@ export default class StatusDisplay {
   }
   
   updateContent(el = this.content) {
-    const { moisture, state } = this.data;
+    const { moisture, state, base_state: baseState } = this.data;
+
     const img = el.querySelector('img');
     const templateImg = this.template.content.querySelector('img');
     img.setAttribute('src', templateImg.getAttribute('src').replace('[state]', state));
+
     const moistureEl = el.querySelector('#moisture');
     const templateMoistureEl = this.template.content.querySelector('#moisture');
     moistureEl.innerHTML = templateMoistureEl.innerHTML.replace('[moisture]', moisture);
+
+    const moistureDescriptionEl = el.querySelector('#moisture-level');
+    const templateMoistureDescriptionEl = this.template.content.querySelector('#moisture-level');
+    moistureDescriptionEl.innerHTML = templateMoistureDescriptionEl.innerHTML.replace('[base_state]', baseState);
+
     return el;
   }
 
