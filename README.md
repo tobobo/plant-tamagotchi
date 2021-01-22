@@ -29,6 +29,14 @@ I used the [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to put a
 - [A `wpa_supplicant.conf` file](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) so that the Pi will connect to the desired Wi-Fi network.
 - [An empty `ssh` file (see "Enable SSH on a headless Raspberry Pi")](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md) to enable SSH access when the Pi boots.
 
+### Sqlite3
+
+You'll need to install Sqlite3 to save your plant's moisture readings and show them on the web server.
+
+```
+sudo apt-get install sqlite3
+```
+
 ### Python libraries
 
 After SSHing in to your Pi (by default you should be able to do `ssh pi@raspberrypi.local` with password `raspberry`, which you'll be prompted to change), you'll need to do some initial setup to install the libraries that allow all the hardware to work.
@@ -41,9 +49,22 @@ After SSHing in to your Pi (by default you should be able to do `ssh pi@raspberr
 #### Moisture sensor
 
 - Use the Python 3 steps to [install Seeed Studio's Grove.py library](https://github.com/Seeed-Studio/grove.py#install-grovepy).
-- You can test that you're getting readings from your moisture sensor by running the `grove/grove_moisture_sensor.py` file—note that the default ranges seem to be off in my tests, they may be for a resistive moisture sensor (the output of the above file will always read "wet").
+- You can test that you're getting readings from your moisture sensor by running the `grove/grove_moisture_sensor.py` file—note that the default ranges seem to be off in my tests, they may be for a resistive moisture sensor (the output of the above script will always read "wet").
 
 ### Setting up this respository.
 
 You do not need to clone this respository to your Raspberry Pi—the deploy script can be used to sync your code from your development computer to the Pi so you can easily iterate on the code.
 
+Copy `.env.sample` to a `.env` file to set up your configuration.
+
+```
+cp .env.sample .env
+```
+
+Edit .env and update the values according to your needs. `PI_USERNAME` and `PI_HOSTNAME` may need to be changed if you changed your pi username/hostname after setting up the raspberry pi. You may need to change `SSH_LC_CTYPE` if you see error messages related to `LC_CTYPE` when deploying the code to your pi, but the default setting should work if you haven't changed language settings on your pi. `WEB_PORT` is used to set the port if you want to test the web server locally.
+
+### Deploying to your pi
+
+If you've set up your `.env` file, you should be able to deploy the necessary files to your raspberry pi by running `./deploy`. You may be prompted twice for your Raspberry Pi's password. If you'd like to avoid this, you can follow the instructions for [passwordless SSH access on your Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md).
+
+If all has gone well, you should be able to see your E-Ink display flash a few times and show an image based on the moisture reading its receiving from the sensor!
