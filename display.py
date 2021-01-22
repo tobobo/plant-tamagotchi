@@ -30,15 +30,16 @@ class Display():
         self.recent_intervals = []
 
     def update(self, state, moisture):
-        self.state = state
+        if self.state != state:
+            self.state = state
 
-        if self.debounce_task == None or self.debounce_task.done():
-            logging.debug("creating task")
-            self.debounce_task = asyncio.create_task(
-                self.debounce_commit(MIN_COOLDOWN))
-        else:
-            logging.info("debounced display update: time: {0}, state: {1}".format(
-                time.time(), state))
+            if self.debounce_task == None or self.debounce_task.done():
+                logging.debug("creating task")
+                self.debounce_task = asyncio.create_task(
+                    self.debounce_commit(MIN_COOLDOWN))
+            else:
+                logging.info("debounced display update: time: {0}, state: {1}".format(
+                    time.time(), state))
 
     async def debounce_commit(self, backoff):
         if self.comitted_state != self.state:
