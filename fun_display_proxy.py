@@ -4,7 +4,7 @@ from random import random, randrange
 PROXY_STATES = ['cap', 'computer', 'music', 'skateboard', 'wig']
 MORNING_BRUSH_HOUR = 9
 EVENING_BRUSH_HOUR = 21
-
+CHANCE_OF_FUN_STATE = 0.3
 
 class FunDisplayProxy():
     def __init__(self, display):
@@ -44,7 +44,7 @@ class FunDisplayProxy():
             return None
 
     def get_proxy_state(self, state):
-        if (random() < 0.3):
+        if (1 - random() < CHANCE_OF_FUN_STATE):
             # not a fun state
             return state
         else:
