@@ -28,6 +28,7 @@ class FunDisplayProxy():
                 self.base_state = state
                 self.display.update(self.state, self.moisture)
             elif (state == self.base_state and self.proxy_state != None and self.proxy_state_date == date.today()):
+                self.state = self.proxy_state
                 self.display.update(self.proxy_state, self.moisture)
             else:
                 self.proxy_state_date = date.today()
