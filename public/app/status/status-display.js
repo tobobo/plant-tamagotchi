@@ -9,7 +9,7 @@ export default class StatusDisplay {
 
   async fetchData() {
     try {
-      this.data = await (await fetch('/status')).json();
+      this.data = await (await fetch('./status')).json();
     } catch(e) {
       this.data = null;
     }

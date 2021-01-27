@@ -58,12 +58,19 @@ def status(request):
     })
 
 
+def config(request):
+    return web.json_response({
+        'thresholds': request.app['sensor'].thresholds,
+    })
+
+
 async def start_server(db, sensor, port=8080):
     app = web.Application()
     app.add_routes([
         web.get('/', index),
         web.get('/history', history),
         web.get('/status', status),
+        web.get('/config', config),
         web.static('/images', 'images'),
         web.static('/', 'public')])
     app['db'] = db
@@ -87,6 +94,11 @@ if __name__ == "__main__":
             self.moisture = 1700
             self.state = 'cap'
             self.base_state = 'wet'
+            self.thresholds = {
+                'very-dry': 1550,
+                'dry': 1500,
+                'moist': 1410,
+            }
 
     faux_sensor = FauxSensor()
     loop = asyncio.get_event_loop()

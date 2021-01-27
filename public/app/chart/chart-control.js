@@ -1,9 +1,9 @@
 import PlantChart from './plant-chart.js';
 
 export default class ChartControl {
-  constructor({ el }) {
+  constructor({ el, configFetcher }) {
     this.el = el;
-    this.chart = new PlantChart({ el: this.el.querySelector('#chart') });
+    this.chart = new PlantChart({ el: this.el.querySelector('#chart'), configFetcher });
     this.showDataButton = this.el.querySelector('#show_data');
     this.resolutionSelect = this.el.querySelector('#resolution');
     this.startDateInput = this.el.querySelector('#start');

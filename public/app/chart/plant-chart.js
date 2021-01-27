@@ -1,8 +1,15 @@
 import fetchChartData from './lib/fetch-chart-data.js'
 
+const THRESHOLD_COLORS = {
+  moist: '#4e7b8a',
+  dry: '#755845',
+  'very-dry': '#9c8870',
+};
+
 export default class PlantChart {
-  constructor({ el }) {
+  constructor({ el, configFetcher }) {
     this.el = el;
+    this.configFetcher = configFetcher;
     this.context = el.querySelector('#chart-canvas').getContext('2d');
   }
   
@@ -24,7 +31,10 @@ export default class PlantChart {
       return;
     }
     this.hasFetched = true;
-    const { chartData, resolution } = await fetchChartData(this.start, this.end, this.resolution);
+    const [{ chartData, resolution }, { thresholds }] = await Promise.all([
+      fetchChartData(this.start, this.end, this.resolution),
+      this.configFetcher.fetch()
+    ]);
     this.lastFetchedData = {
       start: this.start,
       end: this.end,
@@ -32,6 +42,18 @@ export default class PlantChart {
     };
     this.chartData = chartData;
     this.resolution = resolution == 'minute' ? 'hour' : resolution;
+    this.thresholds = thresholds;
+  }
+
+  getAnnotations() {
+    return Object.keys(this.thresholds).map(state => ({
+      type: 'line',
+      mode: 'horizontal',
+      scaleID: 'y-axis-0',
+      value: this.thresholds[state],
+      borderColor: THRESHOLD_COLORS[state],
+      borderWidth: 2,
+    }));
   }
   
   getChartConfig() {
@@ -53,8 +75,8 @@ export default class PlantChart {
                 labelString: 'moisture level',
               },
               ticks: {
-                min: 1000,
-                max: 2000,
+                min: this.chartData.datasets[0].length ? null : 1000,
+                max: this.chartData.datasets[0].length ? null : 2000,
               },
             },
           ],
@@ -71,6 +93,9 @@ export default class PlantChart {
             },
           ],
         },
+        annotation: {
+          annotations: this.getAnnotations(),
+        }
       },
       data: this.chartData,
     };
