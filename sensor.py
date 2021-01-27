@@ -10,6 +10,7 @@ from lib.moisture_sensor import GroveMoistureSensor
 INTERVAL = 5
 
 BASE_THRESHOLDS = {
+    'very-dry': 1550,
     'dry': 1500,
     'moist': 1410,
 }
@@ -20,21 +21,31 @@ NUM_MEAN_MOISTURE_SAMPLES = 10
 
 MOISTURE_THRESHOLDS = {
     None: [
+        ('very-dry', BASE_THRESHOLDS['very-dry']),
         ('dry', BASE_THRESHOLDS['dry']),
         ('moist', BASE_THRESHOLDS['moist']),
         ('wet', -math.inf),
     ],
+    'very-dry': [
+        ('very-dry', BASE_THRESHOLDS['very-dry'] - BUFFER),
+        ('dry', BASE_THRESHOLDS['dry']),
+        ('moist', BASE_THRESHOLDS['moist']),
+        ('wet', -math.inf)
+    ],
     'dry': [
+        ('very-dry', BASE_THRESHOLDS['very-dry'] + BUFFER),
         ('dry', BASE_THRESHOLDS['dry'] - BUFFER),
         ('moist', BASE_THRESHOLDS['moist']),
         ('wet', -math.inf)
     ],
     'moist': [
+        ('very-dry', BASE_THRESHOLDS['very-dry']),
         ('dry', BASE_THRESHOLDS['dry'] + BUFFER),
         ('moist', BASE_THRESHOLDS['moist'] - BUFFER),
         ('wet', -math.inf),
     ],
     'wet': [
+        ('very-dry', BASE_THRESHOLDS['very-dry']),
         ('dry', BASE_THRESHOLDS['dry']),
         ('moist', BASE_THRESHOLDS['moist'] + BUFFER),
         ('wet', -math.inf),
@@ -51,6 +62,7 @@ class Sensor():
         self.moisture = None
         self.state = None
         self.last_readings = []
+        self.thresholds = BASE_THRESHOLDS
 
     def update(self):
         now = time.time()
