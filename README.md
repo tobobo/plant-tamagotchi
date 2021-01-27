@@ -1,3 +1,7 @@
+# Plant Tamagotchi
+
+A face for your plant that might help you remember to water it, with a web frontend that lets you check how fast your plant dries up.
+
 ## Hardware
 
 - [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/). This should (probably) work with any Pi, but the Zero is a good size. I'm not a very confident solderer, so I got a [Zero WH](https://www.raspberrypi.org/blog/zero-wh/).
@@ -62,6 +66,8 @@ cp .env.sample .env
 ```
 
 Edit .env and update the values according to your needs. `PI_USERNAME` and `PI_HOSTNAME` may need to be changed if you changed your pi username/hostname after setting up the raspberry pi. You may need to change `SSH_LC_CTYPE` if you see error messages related to `LC_CTYPE` when deploying the code to your pi, but the default setting should work if you haven't changed language settings on your pi. `WEB_PORT` is used to set the port if you want to test the web server locally.
+
+### Install Python dependencies
 
 ### Deploying to your pi
 
