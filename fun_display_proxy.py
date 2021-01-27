@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, date, time
 from random import random, randrange
 
@@ -5,6 +6,8 @@ PROXY_STATES = ['cap', 'computer', 'music', 'skateboard', 'wig']
 MORNING_BRUSH_HOUR = 9
 EVENING_BRUSH_HOUR = 21
 CHANCE_OF_FUN_STATE = 0.3
+
+FORCED_FUN_STATE_PATH = './forced_fun_state'
 
 class FunDisplayProxy():
     def __init__(self, display):
@@ -14,6 +17,15 @@ class FunDisplayProxy():
         self.base_state = None
         self.proxy_state = None
         self.proxy_state_date = None
+        self.set_forced_fun_state()
+
+    def set_forced_fun_state(self):
+        try:
+            with open(FORCED_FUN_STATE_PATH) as f:
+                self.forced_fun_state = f.read().strip()
+            os.remove(FORCED_FUN_STATE_PATH)
+        except Exception:
+            self.forced_fun_state = None
 
     def update(self, state, moisture):
         self.moisture = moisture
@@ -26,6 +38,13 @@ class FunDisplayProxy():
             if time_based_state != None:
                 self.state = time_based_state
                 self.base_state = state
+                self.display.update(self.state, self.moisture)
+            elif (self.forced_fun_state != None):
+                self.proxy_state_date = date.today()
+                self.state = self.forced_fun_state
+                self.proxy_state = self.state
+                self.base_state = state
+                self.forced_fun_state = None
                 self.display.update(self.state, self.moisture)
             elif (state == self.base_state and self.proxy_state != None and self.proxy_state_date == date.today()):
                 self.state = self.proxy_state
