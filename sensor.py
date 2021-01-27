@@ -63,6 +63,7 @@ class Sensor():
         self.state = None
         self.last_readings = []
         self.thresholds = BASE_THRESHOLDS
+        self.display.thresholds = self.thresholds
 
     def update(self):
         now = time.time()
