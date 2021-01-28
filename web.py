@@ -53,35 +53,61 @@ async def history(request):
 def status(request):
     return web.json_response({
         'moisture': request.app['sensor'].moisture,
-        'state': request.app['sensor'].state,
-        'base_state': request.app['sensor'].base_state,
+        'state': request.app['state_manager'].state,
+        'base_state': request.app['state_manager'].base_state,
     })
 
 
 def config(request):
     return web.json_response({
-        'thresholds': request.app['sensor'].thresholds,
+        'thresholds': request.app['state_manager'].thresholds,
     })
 
 
-async def start_server(db, sensor, port=8080):
-    app = web.Application()
-    app.add_routes([
-        web.get('/', index),
-        web.get('/history', history),
-        web.get('/status', status),
-        web.get('/config', config),
-        web.static('/images', 'images'),
-        web.static('/', 'public')])
-    app['db'] = db
-    app['sensor'] = sensor
-    runner = web.AppRunner(app)
-    await runner.setup()
-    site = web.TCPSite(runner, '0.0.0.0', port)
-    await site.start()
-    logging.info("web server started on port {0}".format(port))
-    while 1:
-        await asyncio.sleep(1)
+class PlantWebServer():
+    def __init__(self, port=8080):
+        self.port = port
+        self._app = web.Application()
+        self._app.add_routes([
+            web.get('/', index),
+            web.get('/history', history),
+            web.get('/status', status),
+            web.get('/config', config),
+            web.static('/images', 'images'),
+            web.static('/', 'public')])
+
+    @property
+    def db(self):
+        return self._app['db']
+
+    @db.setter
+    def db(self, db):
+        self._app['db'] = db
+
+    @property
+    def sensor(self):
+        return self._app['sensor']
+
+    @sensor.setter
+    def sensor(self, sensor):
+        self._app['sensor'] = sensor
+
+    @property
+    def state_manager(self):
+        return self._app['state_manager']
+
+    @state_manager.setter
+    def state_manager(self, state_manager):
+        self._app['state_manager'] = state_manager
+
+    async def start(self):
+        runner = web.AppRunner(self._app)
+        await runner.setup()
+        site = web.TCPSite(runner, '0.0.0.0', self.port)
+        await site.start()
+        logging.info(f"web server started on port {self.port}")
+        while 1:
+            await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
@@ -92,6 +118,9 @@ if __name__ == "__main__":
     class FauxSensor():
         def __init__(self):
             self.moisture = 1700
+
+    class FauxStateManager():
+        def __init__(self):
             self.state = 'cap'
             self.base_state = 'wet'
             self.thresholds = {
@@ -101,9 +130,15 @@ if __name__ == "__main__":
             }
 
     faux_sensor = FauxSensor()
+    faux_state_manager = FauxStateManager()
+
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(start_server(db, faux_sensor))
+        plant_web_server = PlantWebServer()
+        plant_web_server.db = db
+        plant_web_server.sensor = faux_sensor
+        plant_web_server.state_manager = faux_state_manager
+        loop.run_until_complete(plant_web_server.start())
     except KeyboardInterrupt:
         pass
     loop.close()

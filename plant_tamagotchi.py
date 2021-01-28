@@ -5,8 +5,9 @@ import logging
 from sensor import Sensor
 from display import Display
 from database import Database
-from fun_display_proxy import FunDisplayProxy
-from web import start_server
+from state_manager import StateManager
+from mediator import Mediator
+from web import PlantWebServer
 
 logging.basicConfig(level=logging.INFO)
 
@@ -14,11 +15,24 @@ logging.basicConfig(level=logging.INFO)
 async def main():
     db = Database()
     db.setup()
-    display = Display()
-    fun_display_proxy = FunDisplayProxy(display)
-    sensor = Sensor(fun_display_proxy, db)
 
-    asyncio.create_task(start_server(port=80, db=db, sensor=fun_display_proxy))
+    sensor = Sensor()
+    state_manager = StateManager()
+    display = Display()
+
+    mediator = Mediator()
+    mediator.db = db
+    mediator.sensor = sensor
+    mediator.state_manager = state_manager
+    mediator.display = display
+    mediator.bind_updaters()
+
+    web_server = PlantWebServer(port=80)
+    web_server.db = db
+    web_server.sensor = sensor
+    web_server.state_manager = state_manager
+
+    asyncio.create_task(web_server.start())
 
     await sensor.update_loop()
 

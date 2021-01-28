@@ -4,6 +4,7 @@ import time
 import asyncio
 import traceback
 import math
+from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 from lib.epd2in13bc import EPD
 
@@ -23,46 +24,46 @@ STATE_SCALE = {
 
 class Display():
     def __init__(self):
-        self.last_update = None
-        self.state = None
-        self.comitted_state = None
-        self.debounce_task = None
-        self.recent_intervals = []
+        self._last_update = None
+        self._state = None
+        self._comitted_state = None
+        self._debounce_task = None
+        self._recent_intervals = []
 
     def update(self, state, moisture):
-        if self.state != state:
-            self.state = state
+        if self._state != state:
+            self._state = state
 
-            if self.debounce_task == None or self.debounce_task.done():
+            if self._debounce_task == None or self._debounce_task.done():
                 logging.debug("creating task")
-                self.debounce_task = asyncio.create_task(
+                self._debounce_task = asyncio.create_task(
                     self.debounce_commit(MIN_COOLDOWN))
             else:
                 logging.info("debounced display update: time: {0}, state: {1}".format(
-                    time.time(), state))
+                    datetime.now(), state))
 
     async def debounce_commit(self, backoff):
-        if self.comitted_state != self.state:
+        if self._comitted_state != self._state:
             now = time.time()
             last_update = self.record_interval(now)
             cooldown = self.get_cooldown(backoff)
             logging.info("display update: time: {0}, last state: {1}, current state: {2}, last update: {3}, cooldown: {4}".format(
-                now, self.comitted_state, self.state, last_update, cooldown))
-            self.comitted_state = self.state
+                datetime.utcnow(), self._comitted_state, self._state, last_update, cooldown))
+            self._comitted_state = self._state
             await asyncio.gather(self.draw(), asyncio.sleep(cooldown))
             logging.debug("Cooldown complete")
             await self.debounce_commit(backoff * BACKOFF_MULTIPLIER)
 
     def record_interval(self, time):
-        last_update = self.last_update
+        last_update = self._last_update
         if last_update != None:
-            self.recent_intervals.append(time - last_update)
-            self.recent_intervals = self.recent_intervals[-INTERVAL_HISTORY_LENGTH:]
-        self.last_update = time
+            self._recent_intervals.append(time - last_update)
+            self._recent_intervals = self._recent_intervals[-INTERVAL_HISTORY_LENGTH:]
+        self._last_update = time
         return last_update
 
     def get_cooldown(self, backoff):
-        if len(self.recent_intervals) < INTERVAL_HISTORY_LENGTH:
+        if len(self._recent_intervals) < INTERVAL_HISTORY_LENGTH:
             return backoff
 
         mean_update_interval = self.get_mean_update_interval()
@@ -72,10 +73,10 @@ class Display():
             return (INTERVAL_HISTORY_LENGTH + 1) * MIN_MEAN_INTERVAL - INTERVAL_HISTORY_LENGTH * mean_update_interval
 
     def get_mean_update_interval(self):
-        if len(self.recent_intervals) == 0:
+        if len(self._recent_intervals) == 0:
             return None
         else:
-            return sum(self.recent_intervals) / len(self.recent_intervals)
+            return sum(self._recent_intervals) / len(self._recent_intervals)
 
     def get_scale(self, state):
         if state in STATE_SCALE:
@@ -88,15 +89,15 @@ class Display():
             epd = EPD()
             await epd.init()
 
-            logging.debug("Drawing status {0}".format(self.state))
+            logging.debug("Drawing status {0}".format(self._state))
             blackimage1 = Image.new(
                 '1', (epd.height, epd.width), 255)  # 298*126
             redimage1 = Image.new('1', (epd.height, epd.width), 255)  # 298*126
             plant = Image.open(os.path.join(
-                image_dir, self.state + '.png'))
+                image_dir, self._state + '.png'))
             rotated = plant.transpose(Image.ROTATE_90)
             width, height = rotated.size
-            scale = self.get_scale(self.state)
+            scale = self.get_scale(self._state)
             enlarged = rotated.resize((width * scale, height * scale))
             new_width, new_height = enlarged.size
             blackimage1.paste(enlarged, (round(

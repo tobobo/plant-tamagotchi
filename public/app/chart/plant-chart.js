@@ -103,14 +103,7 @@ export default class PlantChart {
   
   async update() {
     await this.ensureData();
-    if (!this.chart) {
-      this.chart = new Chart(this.context, this.getChartConfig());
-    } else {
-      const { data, options } = this.getChartConfig();
-      this.chart.data = data;
-      this.chart.options = options;
-      this.chart.update();
-    }
+    this.chart = new Chart(this.context, this.getChartConfig());
   }
   
   async attach() {

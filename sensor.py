@@ -1,13 +1,14 @@
 import asyncio
 import logging
-import time
-from datetime import datetime
 import os
 import sys
 import math
+from datetime import datetime
 from lib.moisture_sensor import GroveMoistureSensor
 
 INTERVAL = 5
+
+NUM_MEAN_MOISTURE_SAMPLES = 10
 
 BASE_THRESHOLDS = {
     'very-dry': 1550,
@@ -16,8 +17,6 @@ BASE_THRESHOLDS = {
 }
 
 BUFFER = 5
-
-NUM_MEAN_MOISTURE_SAMPLES = 10
 
 MOISTURE_THRESHOLDS = {
     None: [
@@ -54,42 +53,39 @@ MOISTURE_THRESHOLDS = {
 
 
 class Sensor():
-    def __init__(self, display, db):
-        self.display = display
-        self.db = db
-        self.interval = INTERVAL
-        self.moisture_sensor = GroveMoistureSensor(0)
+    def __init__(self):
         self.moisture = None
-        self.state = None
-        self.last_readings = []
         self.thresholds = BASE_THRESHOLDS
-        self.display.thresholds = self.thresholds
+
+        self._update_cb = None
+        self._interval = INTERVAL
+        self._moisture_sensor = GroveMoistureSensor(0)
+        self._last_readings = []
+
+    def on_update(self, update_cb):
+        self._update_cb = update_cb
 
     def update(self):
-        now = time.time()
-        moisture, mean_moisture, state = self.read_moisture()
-        logging.info("sensor: time: {0}, moisture level: {1}, mean moisture level: {2}, previous state: {3}, current state: {4}".format(
-            now, moisture, mean_moisture, self.state, state))
-        self.db.write_moisture(datetime.now().isoformat(), moisture, state)
-        self.display.update(state, moisture)
-        self.state = state
+        moisture, mean_moisture = self.read_moisture()
+        logging.info("sensor: time: {0}, moisture level: {1}, mean moisture level: {2}".format(
+            datetime.utcnow(), moisture, mean_moisture))
         self.moisture = moisture
         self.mean_moisture = mean_moisture
+
+        self._update_cb(self.moisture, self.mean_moisture)
 
     async def update_loop(self):
         while 1:
             self.update()
-            await asyncio.sleep(self.interval)
+            await asyncio.sleep(self._interval)
 
     def get_rolling_mean(self, reading, num_samples):
-        self.last_readings.append(reading)
-        self.last_readings = self.last_readings[-num_samples:]
-        return sum(self.last_readings) / len(self.last_readings)
+        self._last_readings.append(reading)
+        self._last_readings = self._last_readings[-num_samples:]
+        return sum(self._last_readings) / len(self._last_readings)
 
     def read_moisture(self):
-        moisture = self.moisture_sensor.moisture
+        moisture = self._moisture_sensor.moisture
         mean_moisture = self.get_rolling_mean(
             moisture, NUM_MEAN_MOISTURE_SAMPLES)
-        for state, threshold in MOISTURE_THRESHOLDS[self.state]:
-            if mean_moisture > threshold:
-                return moisture, mean_moisture, state
+        return moisture, mean_moisture
