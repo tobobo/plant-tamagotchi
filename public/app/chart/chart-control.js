@@ -9,13 +9,17 @@ export default class ChartControl {
     this.startDateInput = this.el.querySelector('#start');
     this.loadingStateIndicator = this.el.querySelector('#loading_state');
   }
-  
+
   setParameters(...args) {
     this.chart.setParameters(...args);
   }
-  
+
   async onShowClick(e) {
     e.preventDefault();
+    await this.showChart();
+  }
+
+  async showChart() {
     this.showDataButton.setAttribute('hidden', '');
     this.loadingStateIndicator.removeAttribute('hidden');
     try {
@@ -31,7 +35,7 @@ export default class ChartControl {
     }
     this.loadingStateIndicator.setAttribute('hidden', '');
   }
-  
+
   showOrHideButton() {
     if (this.chart.needsFetch()) {
       this.showDataButton.removeAttribute('hidden');
@@ -39,19 +43,19 @@ export default class ChartControl {
       this.showDataButton.setAttribute('hidden', '');
     }
   }
-  
+
   onStartDateChange(e) {
     e.preventDefault();
     this.chart.start = e.target.value;
     this.showOrHideButton();
   }
-  
+
   onResolutionChange(e) {
     e.preventDefault();
     this.chart.resolution = e.target.value;
     this.showOrHideButton();
   }
-  
+
   initializeDatePickers() {
     const now = new Date();
     this.startDateInput.setAttribute('max', now.toISOString().split('T')[0])
@@ -65,15 +69,16 @@ export default class ChartControl {
     this.startDateInput.value = startDateString;
     this.chart.start = startDateString;
   }
-  
+
   bindEvents() {
     this.showDataButton.addEventListener('click', this.onShowClick.bind(this));
     this.startDateInput.addEventListener('change', this.onStartDateChange.bind(this));
     this.resolutionSelect.addEventListener('change', this.onResolutionChange.bind(this));
   }
-  
+
   attach() {
     this.bindEvents();
     this.initializeDatePickers();
+    this.showChart();
   }
 }
