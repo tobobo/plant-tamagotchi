@@ -26,15 +26,15 @@ class Database:
         ''')
         c.execute('''
       CREATE TABLE IF NOT EXISTS moisture_day
-      (datetime TEXT UNIQUE, moisture INT, samples INT);
+      (datetime TEXT UNIQUE, moisture REAL, samples INT);
         ''')
         c.execute('''
       CREATE TABLE IF NOT EXISTS moisture_hour
-      (datetime TEXT UNIQUE, moisture INT, samples INT);
+      (datetime TEXT UNIQUE, moisture REAL, samples INT);
         ''')
         c.execute('''
       CREATE TABLE IF NOT EXISTS moisture_minute
-      (datetime TEXT UNIQUE, moisture INT, samples INT);
+      (datetime TEXT UNIQUE, moisture REAL, samples INT);
         ''')
         self.conn.commit()
 
@@ -42,7 +42,7 @@ class Database:
         c.execute(f'''
             INSERT INTO {rollup_tables[rollup]} (datetime, moisture, samples) VALUES (strftime(?, ?), ?, 1)
             ON CONFLICT(datetime) DO UPDATE SET
-            moisture = (moisture * samples + excluded.moisture) / (samples + 1),
+            moisture = CAST ((moisture * samples + excluded.moisture) as REAL) / (samples + 1),
             samples = samples + 1
         ''', (formats[rollup], timestamp, moisture))
 
