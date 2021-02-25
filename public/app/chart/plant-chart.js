@@ -103,6 +103,7 @@ export default class PlantChart {
   
   async update() {
     await this.ensureData();
+    this.chart?.destroy();
     this.chart = new Chart(this.context, this.getChartConfig());
   }
   
